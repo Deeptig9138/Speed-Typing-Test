@@ -102,7 +102,10 @@ typedTextArea.addEventListener('input', () => {
     const typedText = typedTextArea.value;
     const passageText = passageDisplay.querySelector('p').textContent;
 
-    if (passageText.startsWith(typedText)) {
+    if (passageText === typedText) {
+        handleSubmit();
+    }
+    else if (passageText.startsWith(typedText)) {
         typedTextArea.classList.remove('error');
         typedTextArea.classList.add('good-accuracy');
         typedTextArea.classList.remove('poor-accuracy');

@@ -84,6 +84,7 @@ target/
 # IPython
 profile_default/
 ipython_config.py
+fir-nik-3c5c6-firebase-adminsdk-fbsvc-3e2bdebf87.json
 
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is

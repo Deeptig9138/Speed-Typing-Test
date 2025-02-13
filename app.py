@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 import random
 import database
+import nltk
+from nltk.metrics.distance import edit_distance
 
 app = Flask(__name__)
 app.secret_key = 'shashisingh8434thissamplesecret'
@@ -22,19 +24,20 @@ def home():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    typed_text = request.json['typedText']
-    passage = request.json['passage']
+    typed_text = request.json['typedText'].strip()
+    passage = request.json['passage'].strip()
     time_taken = request.json['timeTaken']
 
-    # Calculate WPM
-    words = len(typed_text.split())
-    wpm = (words / time_taken) * 60 if time_taken > 0 else 0
+    typed_words = typed_text.split()
+    passage_words = passage.split()
+    correct_words = sum(1 for tw, pw in zip(typed_words, passage_words) if tw == pw)
+    wpm = (correct_words / time_taken) * 60 if time_taken > 0 else 0
 
-    # Calculate accuracy
-    correct_chars = sum(1 for a, b in zip(typed_text, passage) if a == b)
-    accuracy = (correct_chars / len(passage)) * 100 if len(passage) > 0 else 0
+    distance = edit_distance(typed_text, passage)
+    max_length = max(len(typed_text), len(passage))
+    accuracy = ((max_length - distance) / max_length) * 100 if max_length > 0 else 0
 
-    return jsonify({'wpm': wpm, 'accuracy': accuracy})
+    return jsonify({'wpm': round(wpm, 2), 'accuracy': round(accuracy, 2)})
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():

@@ -4,7 +4,7 @@ Welcome to the Speed Typing Test project! This web application allows users to t
 
 ## Deployment Link
 
-Access the application here: [Speed Typing Test](https://speed-typing-test-8ujcjkugb-deepti-guptas-projects.vercel.app/)
+Access the application here: [Speed Typing Test](https://speed-typing-test-peach.vercel.app/)
 
 ## Features
 
